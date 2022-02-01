@@ -34,6 +34,8 @@ fi
 # Configure dav.conf
 if [ "x$LOCATION" != "x" ]; then
     sed -e "s|Alias .*|Alias $LOCATION /var/lib/dav/data/|" \
+        -e "/Dav On/a\  IndexIgnore .." \
+        -e "$LOCATION/a\<DirectoryMatch \"\/var\/lib\/dav\/data\/.+/\">\n  IndexIgnoreReset ON\n</DirectoryMatch>" \
         -i "$HTTPD_PREFIX/conf/conf-available/dav.conf"
 fi
 if [ "x$REALM" != "x" ]; then
