@@ -1,0 +1,26 @@
+version: '3'
+services:
+
+  webdav:
+    build: "2.4"
+    image: jeritiana/webdav:2.4
+    container_name: webdav
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8080:80
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - AUTH_TYPE=Digest
+      - USERNAME=alice
+      - PASSWORD=secret1234
+      - SERVER_NAMES=example.com
+      - "LOCATION=/webdav"
+      - ANONYMOUS_METHODS=ALL
+    volumes:
+      - data:/var/lib/dav
+      #- /some/shared/directory:/var/lib/dav/data
+
+volumes:
+  # do not forget to chmod 777 _data directory inside docker volume
+  data:
